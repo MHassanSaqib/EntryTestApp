@@ -8,7 +8,9 @@
                 <div class="card-header">Dashboard</div>
                 <div class="card-body">
                 <form method="POST" action="{{ route('question.update', $question->id) }}">
-                    <input type="hidden" name="_method" value="PUT">
+                    {{-- <input type="hidden" name="_method" value="PUT"> --}}
+                    @method('PUT')
+
                         @include('question._form')
                         <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">

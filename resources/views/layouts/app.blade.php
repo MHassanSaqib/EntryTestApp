@@ -27,9 +27,11 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <a class="navbar-brand" href="{{ route('question.create') }}">
-                    Create Question
-                </a>
+                @auth
+                    <a class="navbar-brand" href="{{ route('question.create') }}">
+                        Create Question
+                    </a>
+                @endauth
                 <a class="navbar-brand" href="{{ route('question.index') }}">
                    Questions
                 </a>

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Question;
-use Illuminate\Http\Request;
-
+use App\HTTP\Requests\QuestionRequest;
 
 class QuestionController extends Controller
 {   
+
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
 
     public function index()
     {
@@ -27,7 +33,7 @@ class QuestionController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
 
         $question = Question::create($request->all());
@@ -41,7 +47,9 @@ class QuestionController extends Controller
 
     public function show(Question $question)
     {
-        //
+
+        return view('question.show', compact('question'));
+        
     }
 
 
@@ -53,7 +61,7 @@ class QuestionController extends Controller
     }
 
 
-    public function update(Request $request, Question $question)
+    public function update(QuestionRequest $request, Question $question)
     {
 
          $question->update($request->all());
@@ -67,7 +75,12 @@ class QuestionController extends Controller
 
     public function destroy(Question $question)
     {
-        //
+
+         $question->delete();
+
+         toastr()->success('Your question has been deleted successfully!');
+
+         return redirect()->route('question.index');
     }
 
 }

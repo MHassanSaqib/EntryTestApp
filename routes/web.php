@@ -2,10 +2,9 @@
 
 Route::view('/', 'welcome');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('question', 'QuestionController');
 
-Route::get('/settings, SettingsController@index');
