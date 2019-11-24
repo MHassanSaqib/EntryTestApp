@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    @foreach ($questions as $question)
+                        {{$question->id}}: {{$question->body}} <br>
+                    @endforeach
                 </div>
             </div>
         </div>

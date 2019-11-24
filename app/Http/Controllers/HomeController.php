@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $questions = Auth::user()->questions()->paginate(10);
+        // dd($questions->count());
+        return view('question.index', compact('questions'));
     }
 }

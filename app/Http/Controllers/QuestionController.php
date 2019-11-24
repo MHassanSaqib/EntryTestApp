@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Question;
 use App\HTTP\Requests\QuestionRequest;
 
+use Auth;
+
 class QuestionController extends Controller
 {   
 
@@ -36,7 +38,12 @@ class QuestionController extends Controller
     public function store(QuestionRequest $request)
     {
 
-        $question = Question::create($request->all());
+        //$question = Question::create($request->all());
+
+        // dd(Auth::user());
+        $question = new Question($request->all());
+
+        Auth::user()->questions()->save($question);
         
         toastr()->success('Your question has been saved successfully!');
 

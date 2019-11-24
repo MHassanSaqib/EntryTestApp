@@ -2,9 +2,9 @@
 
 Route::view('/', 'welcome');
 
-Auth::routes(['register' => false]);
+Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::resource('question', 'QuestionController');
+Route::resource('question', 'QuestionController')->middleware('verified');
 
