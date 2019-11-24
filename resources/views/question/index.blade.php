@@ -12,7 +12,7 @@
                                 <p>Question ID:  {{ $question->id }}</p><br>
                                 <p>{{ $question->body }}</p>
                                 @if($question->user()->exists())
-                                <p>Added by: {{$question->user->name}} | {{$question->user->email}}</p>
+                                    <p>Added by: {{$question->user->name}} | {{$question->user->email}}</p>
                                 @endif
                                 <a href="{{route('question.show', $question->id)}}" class="btn btn-dark">Show</a>
                                 <a href="{{route('question.edit', $question->id)}}" class="btn btn-primary">Edit</a>

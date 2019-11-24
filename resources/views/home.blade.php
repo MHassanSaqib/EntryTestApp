@@ -4,22 +4,49 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                @if(!$questions->count())
+
+                        <div class="card my-2">
+                            <div class="card-body text-center">
+                                You do not have contributed yet.
+                                <br>
+                                To add question, click the button.
+                                <br>
+                                <a class="btn btn-primary" href="{{route('question.create')}}"> Add Question </a>
+                            </div>
                         </div>
-                    @endif
+
+                @endif
 
                     @foreach ($questions as $question)
-                        {{$question->id}}: {{$question->body}} <br>
+
+                        <div class="card my-2">
+                            <div class="card-body">
+                                <p>Question ID:  {{ $question->id }}</p><br>
+                                <p>{{ $question->body }}</p>
+
+                                <a href="{{route('question.show', $question->id)}}" class="btn btn-dark">Show</a>
+                                <a href="{{route('question.edit', $question->id)}}" class="btn btn-primary">Edit</a>
+
+                                <form action="{{route('question.destroy', $question->id)}}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                                
+<!--                                 <form>
+                                    <button href="{{route('question.destroy', $question->id)}}" class="btn btn-danger">Delete</a>
+                                </form>
+ -->
+                            </div>
+                        </div>
+
+
+
                     @endforeach
-                </div>
-            </div>
-        </div>
+
+        <div class="my-4 d-flex justify-content-center">   {{ $questions->links() }} </div>
     </div>
 </div>
 @endsection

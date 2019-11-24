@@ -26,6 +26,6 @@ class HomeController extends Controller
     {
         $questions = Auth::user()->questions()->paginate(10);
         // dd($questions->count());
-        return view('question.index', compact('questions'));
+        return view('home', compact('questions'));
     }
 }

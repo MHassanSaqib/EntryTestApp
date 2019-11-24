@@ -14,6 +14,7 @@ class QuestionController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
+        // $this->->middleware('can:view');
     }
 
 
@@ -21,6 +22,8 @@ class QuestionController extends Controller
     {
 
         $questions = Question::orderBy('id', 'desc')->paginate(10);
+
+        $this->authorize('viewAny', Question::class);
 
         return View('question.index', compact('questions'));
 
@@ -30,6 +33,7 @@ class QuestionController extends Controller
     public function create()
     {
 
+         $this->authorize('create', Question::class);
          return View('question.create');
 
     }
@@ -38,12 +42,7 @@ class QuestionController extends Controller
     public function store(QuestionRequest $request)
     {
 
-        //$question = Question::create($request->all());
-
-        // dd(Auth::user());
-        $question = new Question($request->all());
-
-        Auth::user()->questions()->save($question);
+        $question = Question::create($request->all());
         
         toastr()->success('Your question has been saved successfully!');
 
