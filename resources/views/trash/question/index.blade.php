@@ -18,14 +18,10 @@
                                 
                                 <a href="{{route('question.show', $question->id)}}" class="btn btn-dark">Show</a>
                                 
-                                @can('update', $question)
-                                <a href="{{route('question.edit', $question->id)}}" class="btn btn-primary">Edit</a>
-                                @endcan 
-                                
-                                <form action="{{route('question.destroy', $question->id)}}" method="POST">
-                                    @method('DELETE')
+                                <form action="{{route('trashed.question.restore', $question->id)}}" method="POST">
+                                   
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">Restore</button>
                                 </form>
                                 
                             </div>

@@ -5,89 +5,45 @@ namespace App\Policies;
 use App\Question;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Auth;
+
 
 class QuestionPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any questions.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
+
     public function viewAny(User $user)
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can view the question.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Question  $question
-     * @return mixed
-     */
     public function view(User $user, Question $question)
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can create questions.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
     public function create(User $user)
     {
-        return (Auth::user()->role == 'admin');
+        return ($user->role == 'admin');
     }
 
-    /**
-     * Determine whether the user can update the question.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Question  $question
-     * @return mixed
-     */
     public function update(User $user, Question $question)
     {
-        return (Auth::user()->role == 'admin');
+        if ($user->role != 'admin') 
+            return false;
+        return ($question->user_id == $user->id);
     }
 
-    /**
-     * Determine whether the user can delete the question.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Question  $question
-     * @return mixed
-     */
     public function delete(User $user, Question $question)
     {
-        return (Auth::user()->role == 'admin');
+        return ($user->role == 'admin');
     }
 
-    /**
-     * Determine whether the user can restore the question.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Question  $question
-     * @return mixed
-     */
     public function restore(User $user, Question $question)
     {
         //
     }
 
-    /**
-     * Determine whether the user can permanently delete the question.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Question  $question
-     * @return mixed
-     */
     public function forceDelete(User $user, Question $question)
     {
         //

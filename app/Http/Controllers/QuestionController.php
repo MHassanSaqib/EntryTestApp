@@ -14,7 +14,7 @@ class QuestionController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
-        // $this->->middleware('can:view');
+        $this->authorizeResource(Question::class, 'question');
     }
 
 
@@ -23,7 +23,8 @@ class QuestionController extends Controller
 
         $questions = Question::orderBy('id', 'desc')->paginate(10);
 
-        $this->authorize('viewAny', Question::class);
+        //->where('type', 'fill-in-the-blank')
+        //$this->authorize('viewAny', Question::class);
 
         return View('question.index', compact('questions'));
 
@@ -33,7 +34,8 @@ class QuestionController extends Controller
     public function create()
     {
 
-         $this->authorize('create', Question::class);
+         //$this->authorize('create', Question::class);
+
          return View('question.create');
 
     }
@@ -69,6 +71,7 @@ class QuestionController extends Controller
 
     public function update(QuestionRequest $request, Question $question)
     {
+         //$this->authorize('update', $question);
 
          $question->update($request->all());
 

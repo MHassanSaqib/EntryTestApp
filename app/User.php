@@ -42,4 +42,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Question');
     }
+
+    public function getIsAdminAttribute()
+    {
+        return ($this->role == 'admin');
+    }
 }
