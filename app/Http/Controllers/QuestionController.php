@@ -20,11 +20,13 @@ class QuestionController extends Controller
 
     public function index()
     {
+        $type = request()->get('type');
 
-        $questions = Question::orderBy('id', 'desc')->paginate(10);
+        if (request()->get('type'))
+            $questions = Question::orderBy('id', 'desc')->whereType($type)->paginate(1);
+        else
+            $questions = Question::orderBy('id', 'desc')->paginate(1);
 
-        //->where('type', 'fill-in-the-blank')
-        //$this->authorize('viewAny', Question::class);
 
         return View('question.index', compact('questions'));
 
